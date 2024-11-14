@@ -1,4 +1,4 @@
-%%writefile rag_app.py
+
 import streamlit as st
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
