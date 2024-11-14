@@ -1,4 +1,3 @@
-
 import streamlit as st
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
@@ -51,7 +50,7 @@ retriever = vector_db.as_retriever(search_kwargs={"k": 2})
 # Initialize the language model
 llm = ChatGroq(
     temperature=0,
-    groq_api_key=st.secrets["groq_api_key"],  # Use Streamlit secrets for API keys
+    groq_api_key="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",  # Ensure you have this in your Streamlit secrets
     model_name="mixtral-8x7b-32768"
 )
 
@@ -116,3 +115,24 @@ if prompt := st.chat_input("Ask me anything about Python!"):
 
         # Add assistant response to chat history
         st.session_state.messages.append({"role": "assistant", "content": response})
+
+# Optional: External API request (separate from chatbot functionality)
+import requests
+
+# Define the actual URL for the API request
+url = "https://api.example.com/data"  # Replace with your actual API endpoint
+
+# Set up the headers with the API key
+headers = {"Authorization": f"Bearer {'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'}"}
+
+# Make the request
+try:
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()  # Raises an error for bad responses (4xx or 5xx status codes)
+
+    # Process the response
+    data = response.json()  # Assuming the API returns JSON
+    print("Response data:", data)
+except requests.exceptions.RequestException as e:
+    print("An error occurred:", e)
+
