@@ -47,10 +47,10 @@ embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
 vector_db = FAISS.from_documents(split_docs, embeddings)
 retriever = vector_db.as_retriever(search_kwargs={"k": 2})
 
-# Initialize the language model
+# Initialize the language model with secure access to the API key
 llm = ChatGroq(
     temperature=0,
-    groq_api_key="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",  # Ensure you have this in your Streamlit secrets
+    groq_api_key=st.secrets["groq_api_key"],  # Securely accessing the API key from Streamlit secrets
     model_name="mixtral-8x7b-32768"
 )
 
@@ -122,8 +122,8 @@ import requests
 # Define the actual URL for the API request
 url = "https://api.example.com/data"  # Replace with your actual API endpoint
 
-# Set up the headers with the API key
-headers = {"Authorization": f"Bearer {'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'}"}
+# Set up the headers with the API key from secrets
+headers = {"Authorization": f"Bearer {st.secrets['groq_api_key']}"}
 
 # Make the request
 try:
@@ -135,4 +135,3 @@ try:
     print("Response data:", data)
 except requests.exceptions.RequestException as e:
     print("An error occurred:", e)
-
